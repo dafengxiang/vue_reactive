@@ -2,19 +2,47 @@
  * @Description: 响应式原理
  * @Author: wangfengxiang
  * @Date: 2023-05-08 20:54:05
- * @LastEditTime: 2023-05-09 08:24:04
+ * @LastEditTime: 2023-05-10 11:14:13
  * @LastEditors: wangfengxiang
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>响应式原理</title>
 </head>
+
 <body>
     <div id="app"></div>
-    <script src="./5.js"></script>
+
+    <script type="module">
+        import { reactive, effect } from "./6.mjs"
+        const obj = reactive({
+            text: 'Hello',
+            name: 'wfx'
+        })
+
+        effect(() => {
+            app.innerHTML = obj.name
+        })
+
+        effect(() => {
+            console.log('执行了', obj.name);
+        }, {
+            schedule(fn) {
+                setTimeout(() => {
+                    fn()
+                }, 2000);
+            }
+        })
+
+        setTimeout(() => {
+            obj.name = 'vue2'
+        }, 2000);
+    </script>
 </body>
+
 </html>
